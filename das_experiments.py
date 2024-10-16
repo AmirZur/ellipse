@@ -20,7 +20,12 @@ _ = torch.manual_seed(42)
 _ = torch.cuda.manual_seed(42)
 
 # hack to add custom model to pyvene config
-type_to_dimension_mapping[PyTorchCNN] = []
+type_to_dimension_mapping[PyTorchCNN] = {
+    'conv1': str(28 * 28 * 16),
+    'conv2': str(14 * 14 * 32),
+    'conv3': str(7 * 7 * 64),
+    'fc1': '3'
+}
 
 LAYERS = {
     'conv1': 28 * 28 * 16,
