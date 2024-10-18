@@ -26,7 +26,7 @@ LAYERS = {
     'conv1': 28 * 28 * 16,
     'conv2': 14 * 14 * 32,
     'conv3': 7 * 7 * 64,
-    'fc1': 3
+    # 'fc1': 3
 }
 
 COEFFICIENTS = [
@@ -34,8 +34,6 @@ COEFFICIENTS = [
     np.array([0.3, 0.4, 0.5]),
     np.array([0.5, 0.4, 0.3]),
 ]
-
-# 7 * 4 * 300 = 8400 experiments * 60 seconds = 504000 seconds / 3600 = 140 hours / 5 splits = 28 hours
 
 # ALL SINGLE-SOURCE ??
 VARIABLE_PARTITIONS = [
@@ -167,9 +165,11 @@ def main(
         })
     results_df = pd.DataFrame(results)
 
-    timestamp = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
-    os.makedirs('results', exist_ok=True)
-    results_df.to_csv(f'results/results_{timestamp}.csv')
+    start_index = model_indices[0]
+    end_index = model_indices[-1] + 1
+    results_dir = f'results_i{intervention_size}'
+    os.makedirs(results_dir, exist_ok=True)
+    results_df.to_csv(f'{results_dir}/{start_index}_{end_index}.csv')
 
 if __name__ == '__main__':
     # parse arguments
