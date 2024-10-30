@@ -62,7 +62,9 @@ def das_experiment(
     lr : float = 0.0005,
     num_epochs : int = 3,
     batch_size : int = 512,
-    device : str = 'cuda'
+    device : str = 'cuda',
+    # display settings
+    display_bar : bool = True
 ):
     """
     Run a DAS experiment to localize the variables in the given layer of the model.
@@ -99,7 +101,8 @@ def das_experiment(
         lr=lr, 
         num_epochs=num_epochs, 
         batch_size=batch_size,
-        device=device
+        device=device,
+        display_bar=display_bar
     )
 
     X_base_eval, X_sources_eval, _, _, y_counterfactual_eval = create_single_source_counterfactual_dataset(
@@ -112,7 +115,8 @@ def das_experiment(
         X_sources_eval, 
         y_counterfactual_eval,
         batch_size=batch_size,
-        device=device
+        device=device,
+        display_bar=display_bar
     )
     return accuracy
 

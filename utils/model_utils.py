@@ -30,7 +30,7 @@ class PyTorchCNN(nn.Module):
         x = self.sigmoid(self.fc2(x))
         return x
 
-def train(model, X, y, lr=0.0001, num_epochs=2, batch_size=256):
+def train(model, X, y, lr=0.0001, num_epochs=2, batch_size=256, callback_fns=[], callback_every=5):
     model.train()
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
     for epoch in range(num_epochs):
@@ -43,6 +43,11 @@ def train(model, X, y, lr=0.0001, num_epochs=2, batch_size=256):
                 progress_bar.set_postfix({'loss': loss.item()})
                 loss.backward()
                 optimizer.step()
+                
+                # run callbacks
+                if (b // batch_size) % callback_every == 0:
+                    for callback_fn in callback_fns:
+                        callback_fn(model)
 
 def predict(model, X, batch_size=256):
     model.eval()
