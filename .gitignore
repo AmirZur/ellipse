@@ -1,2 +1,7 @@
 pytorch_models/*
 data/*
+das_over_training_results/*
+*.pytorch_models
+*.pyc
+*.npy
+*.csv
