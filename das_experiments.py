@@ -23,10 +23,10 @@ _ = torch.cuda.manual_seed(42)
 type_to_dimension_mapping[PyTorchCNN] = []
 
 LAYERS = {
-    'conv1': 28 * 28 * 16,
-    'conv2': 14 * 14 * 32,
-    'conv3': 7 * 7 * 64,
-    # 'fc1': 3
+    # 'conv1': 28 * 28 * 16,
+    # 'conv2': 14 * 14 * 32,
+    # 'conv3': 7 * 7 * 64,
+    'fc1': 3
 }
 
 COEFFICIENTS = [
@@ -78,7 +78,7 @@ def das_experiment(
 
     # set up intervention config (1 dim for last layer)
     if layer == 'fc1':
-        intervention_size = 1
+        intervention_size = 2
     representations = [{
         "component": f"{layer}.output",
         "low_rank_dimension": intervention_size,
