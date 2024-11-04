@@ -1,7 +1,7 @@
 import numpy as np
 
 LAYERS = {
-    # 'conv1': 28 * 28 * 16,
+    'conv1': 28 * 28 * 16,
     'conv2': 14 * 14 * 32,
     'conv3': 7 * 7 * 64,
     'fc1': 3
