@@ -85,7 +85,7 @@ if __name__ == '__main__':
     parser.add_argument('--start_index', type=int, default=0)
     parser.add_argument('--end_index', type=int, default=1)
     parser.add_argument('--n_eval', type=float, default=0.2)
-    parser.add_argument('--epochs', type=int, default=500)
+    parser.add_argument('--epochs', type=int, default=1000)
     parser.add_argument('--early_stopping', type=bool, default=True)
     parser.add_argument('--patience', type=int, default=20)
     parser.add_argument('--device', type=str, default='cuda')
