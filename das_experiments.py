@@ -4,6 +4,7 @@ from typing import List
 from utils.counterfactual_data_utils import create_single_source_counterfactual_dataset
 from utils.das_utils import CNNConfig, CustomLowRankRotatedSpaceIntervention, das_evaluate, das_train
 from utils.model_utils import PyTorchCNN
+from utils.constants import LAYERS, COEFFICIENTS, VARIABLE_PARTITIONS
 import pyvene as pv
 import random
 from datetime import datetime
@@ -21,30 +22,6 @@ _ = torch.cuda.manual_seed(42)
 
 # hack to add custom model to pyvene config
 type_to_dimension_mapping[PyTorchCNN] = []
-
-LAYERS = {
-    'conv1': 28 * 28 * 16,
-    'conv2': 14 * 14 * 32,
-    'conv3': 7 * 7 * 64,
-    'fc1': 3
-}
-
-COEFFICIENTS = [
-    np.array([0.4, 0.4, 0.4]),
-    np.array([0.3, 0.4, 0.5]),
-    np.array([0.5, 0.4, 0.3]),
-]
-
-# ALL SINGLE-SOURCE ??
-VARIABLE_PARTITIONS = [
-    [0, 1, 2],
-    [0, 1],
-    [0, 2],
-    [1, 2],
-    [0],
-    [1],
-    [2]
-]
 
 def das_experiment(
     # experiment params
