@@ -24,7 +24,7 @@ type_to_dimension_mapping[PyTorchCNN] = []
 def main(
     model_indices: List[int],
     n_eval: float = 0.2,
-    epochs: int = 500,
+    epochs: int = 1000,
     early_stopping: bool = True,
     patience: int = 20,
     device: str = 'cuda'
@@ -49,6 +49,9 @@ def main(
                 for variables in VARIABLE_PARTITIONS:
                     y_train = torch.tensor(labels_train[:, variables].sum(axis=1)).float()
                     y_eval = torch.tensor(labels_eval[:, variables].sum(axis=1)).float()
+
+                    if layer == 'fc1':
+                        epochs = 10000
 
                     # train probe
                     probe = probe_train(X_act_train, y_train, epochs=epochs, early_stopping=early_stopping, patience=patience, device=device)
