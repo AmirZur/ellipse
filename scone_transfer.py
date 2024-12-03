@@ -1,4 +1,5 @@
 import argparse
+import os
 import random
 from typing import List
 from tqdm import trange
@@ -174,7 +175,9 @@ def main(
     scone_train = load_scone('train')
     scone_test = load_scone('test')
 
-
+    outdir = f'{model_name_or_path}_transfer'
+    os.makedirs(outdir, exist_ok=True)
+    results = {}
     for transfer in ['lex_rel', 'neg_one', 'neg_two', 'neg_count']:
 
         print(f'Training ({transfer})...')
@@ -182,13 +185,14 @@ def main(
 
         print(f'Predicting ({transfer})...')
         predictions = predict(model, tokenizer, scone_test, transfer, batch_size=batch_size)
+        results[transfer] = predictions
 
-        print(f'Saving results to results_{model_name_or_path}_transfer_{transfer}.csv...')
-        results = pd.DataFrame(predictions, columns=SCONE_CATEGORIES)
-        results.to_csv(f'results_{model_name_or_path}_transfer_{transfer}.csv', index=False)
-
-        print(f'Saving loss plot to loss_{model_name_or_path}_transfer_{transfer}.png...')
-        plot_losses(losses, f'loss_{model_name_or_path}_transfer_{transfer}.png')
+        print(f'{outdir}/_loss{transfer}.png')
+        plot_losses(losses, f'{outdir}/_loss{transfer}.png')
+    
+    print(f'Saving results to {outdir}')
+    results_df = pd.DataFrame(results)
+    results_df.to_csv(f'{outdir}/results.csv', index=False)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
