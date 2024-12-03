@@ -111,7 +111,7 @@ def predict(
         predictions += preds
     
     predictions = [LABEL_NAMES[p] for p in predictions]
-    predictions = np.array(predictions).reshape(-1, len(SCONE_CATEGORIES))
+    predictions = np.array(predictions).reshape(len(SCONE_CATEGORIES), -1).T
 
     return predictions
 
