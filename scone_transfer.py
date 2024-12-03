@@ -167,7 +167,7 @@ def main(
     device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 
     print('Loading model...')
-    tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
+    tokenizer = AutoTokenizer.from_pretrained("MoritzLaurer/DeBERTa-v3-base-mnli-fever-anli")
     model = AutoModelForSequenceClassification.from_pretrained(model_name_or_path, device_map=device)
 
     print('Loading data...')
