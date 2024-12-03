@@ -187,12 +187,12 @@ def main(
         predictions = predict(model, tokenizer, scone_test, transfer, batch_size=batch_size)
         results[transfer] = predictions
 
-        print(f'Saving losses to {outdir}/_loss{transfer}.png')
-        plot_losses(losses, f'{outdir}/_loss{transfer}.png')
+        print(f'Saving losses to {outdir}/loss_{transfer}.png')
+        plot_losses(losses, f'{outdir}/loss_{transfer}.png')
     
-    print(f'Saving results to {outdir}')
-    results_df = pd.DataFrame(results)
-    results_df.to_csv(f'{outdir}/results.csv', index=False)
+        print(f'Saving results to {outdir}/results_{transfer}.csv')
+        results_df = pd.DataFrame(results, columns=[transfer])
+        results_df.to_csv(f'{outdir}/results_{transfer}.csv', index=False)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
