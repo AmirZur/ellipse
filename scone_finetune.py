@@ -118,6 +118,7 @@ def predict(
 def main(
     seed : int = 0,
     num_epochs : int = 1,
+    batch_size : int = 8
 ):
     # set seed
     random.seed(seed)
@@ -137,10 +138,10 @@ def main(
     scone_test = load_scone('test')
 
     print('Training...')
-    train(model, tokenizer, scone_train, num_epochs=num_epochs, learning_rate=5e-6, batch_size=8)
+    train(model, tokenizer, scone_train, num_epochs=num_epochs, learning_rate=5e-6, batch_size=batch_size)
 
     print('Predicting...')
-    predictions = predict(model, tokenizer, scone_test, batch_size=8)
+    predictions = predict(model, tokenizer, scone_test, batch_size=batch_size)
 
 
     print(f'Saving results to results_seed_{seed}_epochs_{num_epochs}.csv...')
@@ -154,6 +155,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--seed', type=int, default=0)
     parser.add_argument('--num_epochs', type=int, default=1)
+    parser.add_argument('--batch_size', type=int, default=8)
     args = parser.parse_args()
     main(
         seed=args.seed,

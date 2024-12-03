@@ -1,10 +1,10 @@
-python scone_finetune.py --seed 0 --num_epochs 1
-python scone_finetune.py --seed 1 --num_epochs 1
-python scone_finetune.py --seed 2 --num_epochs 1
-python scone_finetune.py --seed 3 --num_epochs 1
-python scone_finetune.py --seed 4 --num_epochs 1
-python scone_finetune.py --seed 5 --num_epochs 1
-python scone_finetune.py --seed 6 --num_epochs 1
-python scone_finetune.py --seed 7 --num_epochs 1
-python scone_finetune.py --seed 8 --num_epochs 1
-python scone_finetune.py --seed 9 --num_epochs 1
+nlprun -a pyvene -g 1 -r 40G -q jag 'python scone_finetune.py --seed 0 --num_epochs 1 --batch_size 16'
+nlprun -a pyvene -g 1 -r 40G -q jag 'python scone_finetune.py --seed 1 --num_epochs 1 --batch_size 16'
+nlprun -a pyvene -g 1 -r 40G -q jag 'python scone_finetune.py --seed 2 --num_epochs 1 --batch_size 16'
+nlprun -a pyvene -g 1 -r 40G -q jag 'python scone_finetune.py --seed 3 --num_epochs 1 --batch_size 16'
+nlprun -a pyvene -g 1 -r 40G -q jag 'python scone_finetune.py --seed 4 --num_epochs 1 --batch_size 16'
+nlprun -a pyvene -g 1 -r 40G -q jag 'python scone_finetune.py --seed 5 --num_epochs 1 --batch_size 16'
+nlprun -a pyvene -g 1 -r 40G -q jag 'python scone_finetune.py --seed 6 --num_epochs 1 --batch_size 16'
+nlprun -a pyvene -g 1 -r 40G -q jag 'python scone_finetune.py --seed 7 --num_epochs 1 --batch_size 16'
+nlprun -a pyvene -g 1 -r 40G -q jag 'python scone_finetune.py --seed 8 --num_epochs 1 --batch_size 16'
+nlprun -a pyvene -g 1 -r 40G -q jag 'python scone_finetune.py --seed 9 --num_epochs 1 --batch_size 16'
