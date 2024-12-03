@@ -187,7 +187,7 @@ def main(
         predictions = predict(model, tokenizer, scone_test, transfer, batch_size=batch_size)
         results[transfer] = predictions
 
-        print(f'{outdir}/_loss{transfer}.png')
+        print(f'Saving losses to {outdir}/_loss{transfer}.png')
         plot_losses(losses, f'{outdir}/_loss{transfer}.png')
     
     print(f'Saving results to {outdir}')
