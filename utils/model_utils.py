@@ -66,3 +66,24 @@ def evaluate(model, X, y, batch_size=256):
     accuracy = (y_pred == y).float().mean()
     return accuracy.item()
 
+def convert_keras_to_pytorch(keras_model):
+    pytorch_model = PyTorchCNN()
+
+    # Copy weights
+    pytorch_model.conv1.weight.data = torch.FloatTensor(keras_model.get_layer('layer1').get_weights()[0].transpose(3, 2, 0, 1))
+    pytorch_model.conv1.bias.data = torch.FloatTensor(keras_model.get_layer('layer1').get_weights()[1])
+
+    pytorch_model.conv2.weight.data = torch.FloatTensor(keras_model.get_layer('layer2').get_weights()[0].transpose(3, 2, 0, 1))
+    pytorch_model.conv2.bias.data = torch.FloatTensor(keras_model.get_layer('layer2').get_weights()[1])
+
+    pytorch_model.conv3.weight.data = torch.FloatTensor(keras_model.get_layer('layer3').get_weights()[0].transpose(3, 2, 0, 1))
+    pytorch_model.conv3.bias.data = torch.FloatTensor(keras_model.get_layer('layer3').get_weights()[1])
+
+    pytorch_model.fc1.weight.data = torch.FloatTensor(keras_model.get_layer('dense1').get_weights()[0].T)
+    pytorch_model.fc1.bias.data = torch.FloatTensor(keras_model.get_layer('dense1').get_weights()[1])
+
+    # last dense layer has variable naming convention
+    pytorch_model.fc2.weight.data = torch.FloatTensor(keras_model.layers[-1].get_weights()[0].T)
+    pytorch_model.fc2.bias.data = torch.FloatTensor(keras_model.layers[-1].get_weights()[1])
+
+    return pytorch_model

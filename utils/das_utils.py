@@ -2,6 +2,7 @@ from tqdm import trange
 import torch
 import torch.nn as nn
 from pyvene import LowRankRotatedSpaceIntervention
+from pyvene.models.layers import LowRankRotateLayer
 
 ##############################################
 # pyvene helpers (a bit hacky)               #
@@ -16,6 +17,10 @@ class CNNConfig:
         }
 
 class CustomLowRankRotatedSpaceIntervention(LowRankRotatedSpaceIntervention):
+    def __init__(self, **kwargs):
+        kwargs["embed_dim"] = kwargs["latent_dim"]
+        super().__init__(**kwargs)
+
     def forward(self, base, source, subspaces=None):
         # reshape: (batch x everything else)
         base_flattened = base.view(base.shape[0], -1)

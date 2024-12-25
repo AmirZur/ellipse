@@ -1,4 +1,4 @@
-import numpy as np
+NUM_MODELS = 20
 
 LAYERS = {
     'conv1': 28 * 28 * 16,
@@ -6,12 +6,6 @@ LAYERS = {
     'conv3': 7 * 7 * 64,
     'fc1': 3
 }
-
-COEFFICIENTS = [
-    np.array([0.4, 0.4, 0.4]),
-    np.array([0.3, 0.4, 0.5]),
-    np.array([0.5, 0.4, 0.3]),
-]
 
 # ALL SINGLE-SOURCE ??
 VARIABLE_PARTITIONS = [
@@ -23,3 +17,8 @@ VARIABLE_PARTITIONS = [
     [1],
     [2]
 ]
+
+DATA_DIR = 'results_transfer_ellipse/results_12_6'
+MODEL_DIR = 'pytorch_models'
+DAS_RESULTS_DIR = 'results_das_ellipse'
+PROBE_RESULTS_DIR = 'results_probe_ellipse'
