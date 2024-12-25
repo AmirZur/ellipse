@@ -89,8 +89,9 @@ def main(
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--start_index', type=int, default=0)
-    parser.add_argument('--end_index', type=int, default=1)
+    parser.add_argument('--coefficients', type=str, required=True)
+    parser.add_argument('--image_path', type=str, default='train_images_2024-12-06_09-18-31.npy')
+    parser.add_argument('--label_path', type=str, default='train_latent_values_2024-12-06_09-18-31.npy')
     parser.add_argument('--n_eval', type=float, default=0.2)
     parser.add_argument('--epochs', type=int, default=1000)
     parser.add_argument('--early_stopping', type=bool, default=True)
@@ -98,7 +99,9 @@ if __name__ == '__main__':
     parser.add_argument('--device', type=str, default='cuda')
     args = parser.parse_args()
     main(
-        model_indices=list(range(args.start_index, args.end_index)),
+        coefficients=args.coefficients,
+        image_path=args.image_path,
+        label_path=args.label_path,
         n_eval=args.n_eval,
         epochs=args.epochs,
         early_stopping=args.early_stopping,
