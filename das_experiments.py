@@ -1,6 +1,6 @@
 import os
 import argparse
-from typing import List
+from typing import List, Optional
 from utils.counterfactual_data_utils import create_single_source_counterfactual_dataset
 from utils.das_utils import CNNConfig, CustomLowRankRotatedSpaceIntervention, das_evaluate, das_train
 from utils.model_utils import PyTorchCNN
@@ -101,6 +101,7 @@ def das_experiment(
 
 def main(
     coefficients : str,
+    untrained_models : bool = False,
     image_path : str = 'train_images_2024-12-06_09-18-31.npy',
     label_path : str = 'train_latent_values_2024-12-06_09-18-31.npy',
     n_train: int = 10000,
@@ -117,8 +118,11 @@ def main(
     np_coefficients = np.array(coef_str, dtype=float) / 100.0
 
     print('Loaded coefficients:', np_coefficients)
-
-    model_dir = f'{MODEL_DIR}/pytorch_models_ci{coef_str[0]}_co{coef_str[1]}_ar{coef_str[2]}'
+    
+    if untrained_models:
+        model_dir = f'{MODEL_DIR}/pytorch_models_untrained'
+    else:
+        model_dir = f'{MODEL_DIR}/pytorch_models_ci{coef_str[0]}_co{coef_str[1]}_ar{coef_str[2]}'
 
     assert len(os.listdir(model_dir)) == NUM_MODELS, f"Expected {NUM_MODELS} in {model_dir}, found {len(os.listdir(model_dir))}"
 
@@ -157,6 +161,8 @@ def main(
     results_df = pd.DataFrame(results)
 
     results_dir = f'{DAS_RESULTS_DIR}/ci{coef_str[0]}_co{coef_str[1]}_ar{coef_str[2]}'
+    if untrained_models:
+        results_dir += '_untrained'
     os.makedirs(results_dir, exist_ok=True)
     results_df.to_csv(f'{results_dir}/results_i{intervention_size}.csv')
 
@@ -164,6 +170,7 @@ if __name__ == '__main__':
     # parse arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('--coefficients', type=str, required=True)
+    parser.add_argument('--untrained_models', action='store_true')
     parser.add_argument('--image_path', type=str, default='train_images_2024-12-06_09-18-31.npy')
     parser.add_argument('--label_path', type=str, default='train_latent_values_2024-12-06_09-18-31.npy')
     parser.add_argument('--n_train', type=int, default=10000)
@@ -178,6 +185,7 @@ if __name__ == '__main__':
     # run main
     main(
         coefficients=args.coefficients,
+        untrained_models=args.untrained_models,
         image_path=args.image_path,
         label_path=args.label_path,
         n_train=args.n_train,

@@ -23,6 +23,7 @@ type_to_dimension_mapping[PyTorchCNN] = []
 
 def main(
     coefficients : str,
+    untrained_models : bool = False,
     image_path : str = 'train_images_2024-12-06_09-18-31.npy',
     label_path : str = 'train_latent_values_2024-12-06_09-18-31.npy',
     n_eval: float = 0.2,
@@ -35,12 +36,13 @@ def main(
     images = np.load(f'{DATA_DIR}/{image_path}')
     labels = np.load(f'{DATA_DIR}/{label_path}')
     coef_str = coefficients.split('_')
-    np_coefficients = np.array(coef_str, dtype=float) / 100.0
     
-    model_dir = f'{MODEL_DIR}/pytorch_models_ci{coef_str[0]}_co{coef_str[1]}_ar{coef_str[2]}'
+    if untrained_models:
+        model_dir = f'{MODEL_DIR}/pytorch_models_untrained'
+    else:
+        model_dir = f'{MODEL_DIR}/pytorch_models_ci{coef_str[0]}_co{coef_str[1]}_ar{coef_str[2]}'
     assert len(os.listdir(model_dir)) == NUM_MODELS, f"Expected {NUM_MODELS} in {model_dir}, found {len(os.listdir(model_dir))}"
 
-    
     X = torch.tensor(images.reshape((-1, 1, 28, 28))).float()
     X_train, X_eval, labels_train, labels_eval = train_test_split(X, labels, test_size=n_eval, random_state=42)
 
@@ -84,8 +86,10 @@ def main(
                 # save results after each layer (in case of crash)
                 results_df = pd.DataFrame(results)
                 os.makedirs(PROBE_RESULTS_DIR, exist_ok=True)
-                results_path = f'{PROBE_RESULTS_DIR}/ci{coef_str[0]}_co{coef_str[1]}_ar{coef_str[2]}.csv'
-                results_df.to_csv(results_path)
+                results_path = f'{PROBE_RESULTS_DIR}/ci{coef_str[0]}_co{coef_str[1]}_ar{coef_str[2]}'
+                if untrained_models:
+                    results_path += '_untrained'
+                results_df.to_csv(results_path + '.csv')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
