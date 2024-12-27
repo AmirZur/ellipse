@@ -4,4 +4,4 @@
 # nlprun -a ellipse -g 1 -r 40G -q jag -o logs/probe_36_40_44.log 'python probe_experiments.py --coefficients 36_40_44'
 # nlprun -a ellipse -g 1 -r 40G -q jag -o logs/probe_44_40_36.log 'python probe_experiments.py --coefficients 44_40_36'
 # untrained models
-nlprun -a ellipse -g 1 -r 40G -q jag -o logs/probe_44_40_36.log 'python probe_experiments.py --coefficients 0_0_0 --untrained_models'
+nlprun -a ellipse -g 1 -r 40G -q jag -o logs/probe_44_40_36_untrained.log 'python probe_experiments.py --coefficients 0_0_0 --untrained_models'
