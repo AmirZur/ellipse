@@ -94,6 +94,7 @@ def main(
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--coefficients', type=str, required=True)
+    parser.add_argument('--untrained_models', type=bool, default=False)
     parser.add_argument('--image_path', type=str, default='train_images_2024-12-06_09-18-31.npy')
     parser.add_argument('--label_path', type=str, default='train_latent_values_2024-12-06_09-18-31.npy')
     parser.add_argument('--n_eval', type=float, default=0.2)
@@ -104,6 +105,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     main(
         coefficients=args.coefficients,
+        untrained_models=args.untrained_models,
         image_path=args.image_path,
         label_path=args.label_path,
         n_eval=args.n_eval,
